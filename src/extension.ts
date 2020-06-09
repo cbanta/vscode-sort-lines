@@ -14,7 +14,10 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('sortLines.sortLinesNatural', sortLines.sortNatural),
     vscode.commands.registerCommand('sortLines.sortLinesUnique', sortLines.sortUnique),
     vscode.commands.registerCommand('sortLines.sortLinesShuffle', sortLines.sortShuffle),
-    vscode.commands.registerCommand('sortLines.removeDuplicateLines', sortLines.removeDuplicateLines)
+    vscode.commands.registerCommand('sortLines.removeDuplicateLines', sortLines.removeDuplicateLines),
+    vscode.commands.registerCommand('sortLines.sortWords2', sortLines.sortWords2),
+    vscode.commands.registerCommand('sortLines.sortWords3', sortLines.sortWords3),
+    vscode.commands.registerCommand('sortLines.sortWords4', sortLines.sortWords4),
   ];
 
   commands.forEach(command => context.subscriptions.push(command));

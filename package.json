@@ -39,7 +39,10 @@
     "onCommand:sortLines.sortLinesNatural",
     "onCommand:sortLines.sortLinesUnique",
     "onCommand:sortLines.removeDuplicateLines",
-    "onCommand:sortLines.sortLinesShuffle"
+    "onCommand:sortLines.sortLinesShuffle",
+    "onCommand:sortLines.sortWords2",
+    "onCommand:sortLines.sortWords3",
+    "onCommand:sortLines.sortWords4"
   ],
   "main": "./out/extension",
   "contributes": {
@@ -91,6 +94,18 @@
       {
         "command": "sortLines.sortLinesShuffle",
         "title": "Sort lines (shuffle)"
+      },
+      {
+        "command": "sortLines.sortWords2",
+        "title": "Sort lines (2nd word)"
+      },
+      {
+        "command": "sortLines.sortWords3",
+        "title": "Sort lines (3rd word)"
+      },
+      {
+        "command": "sortLines.sortWords4",
+        "title": "Sort lines (4th word)"
       }
     ],
     "configuration": {

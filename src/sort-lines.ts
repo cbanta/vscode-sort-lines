@@ -4,7 +4,7 @@ type ArrayTransformer = (lines: string[]) => string[];
 type SortingAlgorithm = (a: string, b: string) => number;
 
 function makeSorter(algorithm?: SortingAlgorithm): ArrayTransformer {
-  return function(lines: string[]): string[] {
+  return function (lines: string[]): string[] {
     return lines.sort(algorithm);
   };
 }
@@ -66,7 +66,7 @@ function reverseCompare(a: string, b: string): number {
 }
 
 function caseInsensitiveCompare(a: string, b: string): number {
-  return a.localeCompare(b, undefined, {sensitivity: 'base'});
+  return a.localeCompare(b, undefined, { sensitivity: 'base' });
 }
 
 function lineLengthCompare(a: string, b: string): number {
@@ -91,10 +91,20 @@ function variableLengthReverseCompare(a: string, b: string): number {
   return variableLengthCompare(a, b) * -1;
 }
 
+function generateCaseInsensitiveWordCompare(pos: number) {
+  return function (a: string, b: string): number {
+    var a2 = a.split(/(\s+)/).filter( e => e.trim().length > 0);
+    var a3 = a2.length > pos ? a2[pos] : "";
+    var b2 = b.split(/(\s+)/).filter( e => e.trim().length > 0);
+    var b3 = b2.length > pos ? b2[pos] : "";
+    return a3.localeCompare(b3, undefined, { sensitivity: 'base' });
+  }
+}
+
 let intlCollator: Intl.Collator;
 function naturalCompare(a: string, b: string): number {
   if (!intlCollator) {
-    intlCollator = new Intl.Collator(undefined, {numeric: true});
+    intlCollator = new Intl.Collator(undefined, { numeric: true });
   }
   return intlCollator.compare(a, b);
 }
@@ -112,11 +122,11 @@ function getVariableCharacters(line: string): string {
 }
 
 function shuffleSorter(lines: string[]): string[] {
-    for (let i = lines.length - 1; i > 0; i--) {
-        const rand = Math.floor(Math.random() * (i + 1));
-        [lines[i], lines[rand]] = [lines[rand], lines[i]];
-    }
-    return lines;
+  for (let i = lines.length - 1; i > 0; i--) {
+    const rand = Math.floor(Math.random() * (i + 1));
+    [lines[i], lines[rand]] = [lines[rand], lines[i]];
+  }
+  return lines;
 }
 
 const transformerSequences = {
@@ -131,7 +141,10 @@ const transformerSequences = {
   sortVariableLengthReverse: [makeSorter(variableLengthReverseCompare)],
   sortNatural: [makeSorter(naturalCompare)],
   sortShuffle: [shuffleSorter],
-  removeDuplicateLines: [removeDuplicates]
+  removeDuplicateLines: [removeDuplicates],
+  wordCompare2: [makeSorter(generateCaseInsensitiveWordCompare(1))],
+  wordCompare3: [makeSorter(generateCaseInsensitiveWordCompare(2))],
+  wordCompare4: [makeSorter(generateCaseInsensitiveWordCompare(3))],
 };
 
 export const sortNormal = () => sortActiveSelection(transformerSequences.sortNormal);
@@ -146,3 +159,6 @@ export const sortVariableLengthReverse = () => sortActiveSelection(transformerSe
 export const sortNatural = () => sortActiveSelection(transformerSequences.sortNatural);
 export const sortShuffle = () => sortActiveSelection(transformerSequences.sortShuffle);
 export const removeDuplicateLines = () => sortActiveSelection(transformerSequences.removeDuplicateLines);
+export const sortWords2 = () => sortActiveSelection(transformerSequences.wordCompare2);
+export const sortWords3 = () => sortActiveSelection(transformerSequences.wordCompare3);
+export const sortWords4 = () => sortActiveSelection(transformerSequences.wordCompare4);
